@@ -1272,14 +1272,21 @@ class _AddDialogState extends State<_AddDialog> {
 
   @override
   Widget build(BuildContext context) {
+    // Force the dialog to the max allowed width so long localized labels/hints
+    // (e.g. Vietnamese) do not inflate TextField intrinsic width past the screen
+    // and paint a "RIGHT OVERFLOWED BY N PIXELS" banner on the form fields.
     return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       title: Text(
         _isEditing ? context.l10n.edit_gateway_connection : context.l10n.add_gateway_connection,
       ),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
+      content: SizedBox(
+        width: double.maxFinite,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
             if (_error != null) ...[
               Container(
                 width: double.infinity,
@@ -1319,6 +1326,7 @@ class _AddDialogState extends State<_AddDialog> {
                 labelText: context.l10n.host,
                 hintText:
                     '192.168.1.50, 100.x.y.z, or hermes-machine.tailnet.ts.net',
+                hintMaxLines: 2,
               ),
               keyboardType: TextInputType.text,
               autocorrect: false,
@@ -1329,6 +1337,7 @@ class _AddDialogState extends State<_AddDialog> {
               decoration: InputDecoration(
                 labelText: context.l10n.port,
                 hintText: context.l10n.leave_blank_for_default_8642_443_with_https,
+                hintMaxLines: 2,
               ),
               keyboardType: TextInputType.number,
             ),
@@ -1338,6 +1347,7 @@ class _AddDialogState extends State<_AddDialog> {
               decoration: InputDecoration(
                 labelText: context.l10n.api_key,
                 hintText: context.l10n.api_server_key_from_hermes_env,
+                hintMaxLines: 2,
               ),
               obscureText: true,
             ),
@@ -1356,9 +1366,11 @@ class _AddDialogState extends State<_AddDialog> {
                       color: Colors.grey[500],
                     ),
                     const SizedBox(width: 4),
-                    Text(
-                      context.l10n.custom_proxy_and_dashboard_details,
-                      style: TextStyle(color: Colors.grey[500], fontSize: 13),
+                    Expanded(
+                      child: Text(
+                        context.l10n.custom_proxy_and_dashboard_details,
+                        style: TextStyle(color: Colors.grey[500], fontSize: 13),
+                      ),
                     ),
                   ],
                 ),
@@ -1450,6 +1462,7 @@ class _AddDialogState extends State<_AddDialog> {
               ),
             ],
           ],
+          ),
         ),
       ),
       actions: [
