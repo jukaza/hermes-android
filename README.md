@@ -1,331 +1,330 @@
 # Hermes Android — v2.1.13
 
-Android client for [Hermes Agent](https://hermes-agent.nousresearch.com/) — chat with your Hermes sessions from a phone or tablet over local Wi-Fi or a private Tailscale network.
+Ứng dụng Android cho [Hermes Agent](https://hermes-agent.nousresearch.com/) — trò chuyện với các phiên Hermes của bạn từ điện thoại hoặc máy tính bảng qua Wi-Fi cục bộ hoặc mạng Tailscale riêng tư.
 
-> **v2.0.0** merges the community Remote Gateway edition contributed by
-> [@CristianGCiocoi](https://github.com/CristianGCiocoi), with review and
-> testing from [@AI-Guru](https://github.com/AI-Guru) and
-> [@grunjol](https://github.com/grunjol). The merge brings a unified Desktop
-> Gateway JSON-RPC transport, per-chat model selection, multi-attachment uploads,
-> durable turn recovery, voice dictation, and a comprehensive test suite.
-> See [CHANGELOG.md](CHANGELOG.md) for the full list and the
-> [merge PR thread](https://github.com/rusty4444/hermes-android/issues/81) for
-> the community discussion.
+> **v2.0.0** hợp nhất phiên bản Remote Gateway cộng đồng được đóng góp bởi
+> [@CristianGCiocoi](https://github.com/CristianGCiocoi), với đánh giá và
+> kiểm thử từ [@AI-Guru](https://github.com/AI-Guru) và
+> [@grunjol](https://github.com/grunjol). Việc hợp nhất mang lại truyền tải
+> JSON-RPC Desktop Gateway thống nhất, chọn mô hình cho từng cuộc trò chuyện,
+> tải lên nhiều tệp đính kèm, khôi phục vòng bền vững, nhập giọng nói và một
+> bộ kiểm thử toàn diện. Xem [CHANGELOG.md](CHANGELOG.md) để biết danh sách đầy đủ
+> và [chuỗi PR hợp nhất](https://github.com/rusty4444/hermes-android/issues/81)
+> để biết thảo luận cộng đồng.
 
-## Current release
+## Phiên bản hiện tại
 
-- Version: **2.1.13** (build 2153)
-- Package: `com.hermesagent.hermes_android`
-- Recommended APK for modern phones: ARM64 release build from the
-  [Releases](https://github.com/rusty4444/hermes-android/releases) page.
-- Production builds are signed with a private release keystore. Debug APKs
-  signed with the Android debug certificate remain available for testing
-  under the `com.hermesagent.hermes_android.dev` package ID.
-- Previous upstream releases remain available from the
-  [Releases](https://github.com/rusty4444/hermes-android/releases) page.
+- Phiên bản: **2.1.13** (build 2153)
+- Gói: `com.hermesagent.hermes_android`
+- APK đề xuất cho điện thoại hiện đại: bản build phát hành ARM64 từ trang
+  [Releases](https://github.com/rusty4444/hermes-android/releases).
+- Các bản build sản xuất được ký bằng keystore phát hành riêng tư. APK gỡ lỗi
+  được ký bằng chứng chỉ gỡ lỗi Android vẫn có sẵn để kiểm thử dưới ID gói
+  `com.hermesagent.hermes_android.dev`.
+- Các phiên bản upstream trước đó vẫn có sẵn từ trang
+  [Releases](https://github.com/rusty4444/hermes-android/releases).
 
-## Remote Gateway edition highlights
+## Điểm nổi bật phiên bản Remote Gateway
 
-- One Desktop Gateway JSON-RPC session for text, images, and files.
-- Copy/select text, Read aloud, Stop, Edit and resend, Regenerate, and export.
-- Up to 10 Remote Gateway attachments per draft, capped at 64 MiB total;
-  generic files retain the 16 MiB per-file limit.
-- File-backed app cache, metadata-sanitized JPEG/PNG/WebP images, ordered
-  sequential upload, accessible reordering, remove, and individual retry.
-  Sanitized JPEG inputs remain JPEG; PNG and WebP inputs are emitted as PNG.
-- Legacy REST remains fail-closed to one image and does not expose multi-select.
-- Per-chat model and thinking effort without changing the profile default.
-- Search, Rename, Branch, and Delete for remote conversations.
-- Native approval, sudo/secret, clarification, reasoning, tool activity,
-  notifications, background results, reviews, and subagent status.
-- Persistent reconnect/session resume and defensive retry handling.
-- **Background turn notifications** — Android notifications fire when a
-  gateway turn completes while the app is backgrounded, mirroring the
-  Hermes Desktop tray notification behaviour. Notifications are
-  automatically cleared when returning to the app.
+- Một phiên JSON-RPC Desktop Gateway cho văn bản, hình ảnh và tệp.
+- Sao chép/chọn văn bản, Đọc to, Dừng, Chỉnh sửa và gửi lại, Tạo lại và xuất.
+- Lên đến 10 tệp đính kèm Remote Gateway mỗi bản nháp, giới hạn tổng cộng 64 MiB;
+  các tệp chung giữ giới hạn 16 MiB mỗi tệp.
+- Bộ đệm ứng dụng dựa trên tệp, hình ảnh JPEG/PNG/WebP đã được làm sạch siêu dữ liệu,
+  tải lên tuần tự có thứ tự, sắp xếp lại có thể truy cập, xóa và thử lại từng cái.
+  Đầu vào JPEG đã được làm sạch vẫn là JPEG; đầu vào PNG và WebP được xuất ra dưới dạng PNG.
+- REST cũ vẫn bị đóng thất bại với một hình ảnh và không hiển thị đa chọn.
+- Mô hình và nỗ lực suy nghĩ cho từng cuộc trò chuyện mà không thay đổi mặc định hồ sơ.
+- Tìm kiếm, Đổi tên, Nhánh và Xóa cho các cuộc trò chuyện từ xa.
+- Phê duyệt gốc, sudo/secret, làm rõ, lý luận, hoạt động công cụ,
+  thông báo, kết quả nền, đánh giá và trạng thái subagent.
+- Kết nối lại/tiếp tục phiên liên tục và xử lý thử lại phòng thủ.
+- **Thông báo vòng nền** — Thông báo Android kích hoạt khi một vòng
+  gateway hoàn thành trong khi ứng dụng ở nền, phản ánh hành vi
+  thông báo khay Hermes Desktop. Thông báo tự động xóa khi quay lại ứng dụng.
 
-### Gateway transport compatibility
+### Khả năng tương thích truyền tải gateway
 
-Stock Hermes Agent releases do not currently advertise the experimental
-`capabilities.turn_recovery` contract in `gateway.ready`. Against those releases,
-the app intentionally uses the legacy Desktop Gateway transport and displays
-**Background recovery unavailable — legacy transport**. If a legacy turn finishes
-while Android is backgrounded, the app re-syncs that session's server-side
-history on resume. The durable exactly-once recovery path activates only when a
-gateway explicitly advertises the compatible recovery contract.
+Các phiên bản Hermes Agent cổ điển hiện không quảng cáo hợp đồng
+`capabilities.turn_recovery` thử nghiệm trong `gateway.ready`. Đối với các phiên bản đó,
+ứng dụng có chủ ý sử dụng truyền tải Desktop Gateway cũ và hiển thị
+**Khôi phục nền không khả dụng — phương thức truyền tải cũ**. Nếu một vòng cũ hoàn thành
+trong khi Android ở nền, ứng dụng đồng bộ lại lịch sử phía máy chủ của phiên đó
+khi tiếp tục. Đường dẫn khôi phục chính xác một lần bền vững chỉ kích hoạt khi
+gateway rõ ràng quảng cáo hợp đồng khôi phục tương thích.
 
-See [CHANGELOG.md](CHANGELOG.md) for the complete `.13` change list and
-[docs/HERMESAPK_DEVELOPMENT_LOG.md](docs/HERMESAPK_DEVELOPMENT_LOG.md) for the
-sanitized implementation and validation record.
+Xem [CHANGELOG.md](CHANGELOG.md) để biết danh sách thay đổi `.13` đầy đủ và
+[docs/HERMESAPK_DEVELOPMENT_LOG.md](docs/HERMESAPK_DEVELOPMENT_LOG.md) để biết
+bản ghi triển khai và xác thực đã được làm sạch.
 
-## What's new in v2.1.13
+## Có gì mới trong v2.1.13
 
-- **Select exactly the text you need** — long-press any chat message to open a
-  selectable-text dialog, then copy part or all of the message. The dialog is
-  readable in light and dark themes and localised in all nine shipped languages.
+- **Chọn chính xác văn bản bạn cần** — nhấn giữ bất kỳ tin nhắn trò chuyện nào để mở
+  hộp thoại văn bản có thể chọn, sau đó sao chép một phần hoặc tất cả tin nhắn. Hộp thoại
+  có thể đọc được ở chủ đề sáng và tối và được bản địa hóa trong tất cả chín ngôn ngữ được cung cấp.
 
-## What's new in v2.1.12
+## Có gì mới trong v2.1.12
 
-- **Per-app language selection** — Android 13 and newer now list all nine
-  shipped Hermes locales in the system's app-language settings.
-- **Accurate idle sessions** — unended chats no longer remain permanently
-  active when the Gateway omits a liveness flag; Projects placeholders are
-  ignored and recent activity gets a bounded five-minute window.
+- **Chọn ngôn ngữ cho từng ứng dụng** — Android 13 trở lên hiện liệt kê tất cả chín
+  ngôn ngữ Hermes được cung cấp trong cài đặt ngôn ngữ ứng dụng của hệ thống.
+- **Phiên nhàn rỗi chính xác** — các cuộc trò chuyện chưa kết thúc không còn ở trạng thái
+  hoạt động vĩnh viễn khi Gateway bỏ qua cờ liveness; các giữ chỗ Dự án bị
+  bỏ qua và hoạt động gần đây có cửa sổ năm phút bị giới hạn.
 
-## What's new in v2.1.11
+## Có gì mới trong v2.1.11
 
-- **Eight new languages** — the app is now localised in Japanese, Simplified
-  Chinese, Korean, Spanish, French, German, Brazilian Portuguese, and Russian.
-- **Reliable locale behaviour** — unsupported locales fall back to English,
-  Russian counts use the correct plural forms, and Chinese and Portuguese
-  region variants do not receive an incompatible catalogue.
+- **Tám ngôn ngữ mới** — ứng dụng hiện được bản địa hóa bằng tiếng Nhật, tiếng Trung
+  Giản thể, tiếng Hàn, tiếng Tây Ban Nha, tiếng Pháp, tiếng Đức, tiếng Bồ Đào Nha Brazil và tiếng Nga.
+- **Hành vi ngôn ngữ đáng tin cậy** — các ngôn ngữ không được hỗ trợ quay lại tiếng Anh,
+  số đếm tiếng Nga sử dụng các dạng số nhiều chính xác, và các biến thể khu vực tiếng Trung và tiếng Bồ Đào Nha
+  không nhận được danh mục không tương thích.
 
-## What's new in v2.1.10
+## Có gì mới trong v2.1.10
 
-- **Existing chats stay on target** — sending from a server-listed chat now
-  continues that exact session instead of creating a new sibling session.
-- **Single creation path for new chats** — local drafts use recovery v2 without
-  racing a second legacy session creation, while explicit fallback remains safe.
+- **Các cuộc trò chuyện hiện có ở đúng mục tiêu** — gửi từ một cuộc trò chuyện được liệt kê trên máy chủ hiện
+  tiếp tục chính xác phiên đó thay vì tạo một phiên anh em mới.
+- **Đường dẫn tạo duy nhất cho các cuộc trò chuyện mới** — các bản nháp cục bộ sử dụng khôi phục v2 mà không
+  đua với việc tạo phiên cũ thứ hai, trong khi dự phòng rõ ràng vẫn an toàn.
 
-## What's new in v2.1.9
+## Có gì mới trong v2.1.9
 
-- **Interactive Gateway requests on Android** — clarification, approval, sudo,
-  and secret prompts now reach the phone during a running turn and recover
-  safely across reconnects.
-- **Fast, safe large-chat restore** — large sessions load a bounded recent
-  transcript without blocking the composer, then reconcile authoritative
-  history without losing newer turns.
-- **Accurate session status** — Android now uses the Gateway's explicit active
-  state instead of treating every unended session as still running.
+- **Yêu cầu Gateway tương tác trên Android** — dấu nhắc làm rõ, phê duyệt, sudo
+  và secret hiện đến điện thoại trong một vòng đang chạy và khôi phục
+  an toàn qua các kết nối lại.
+- **Khôi phục cuộc trò chuyện lớn nhanh, an toàn** — các phiên lớn tải bảng ghi gần đây bị giới hạn
+  mà không chặn trình soạn thảo, sau đó đối chiếu lịch sử
+  có thẩm quyền mà không mất các vòng mới hơn.
+- **Trạng thái phiên chính xác** — Android hiện sử dụng trạng thái hoạt động
+  rõ ràng của Gateway thay vì coi mọi phiên chưa kết thúc là vẫn đang chạy.
 
-## What's new in v2.1.8
+## Có gì mới trong v2.1.8
 
-v2.1.8 fixes two connection-lifecycle problems diagnosed and resolved by
-[@igitur](https://github.com/igitur) in PRs #111 and #113.
+v2.1.8 sửa hai vấn đề vòng đời kết nối được chẩn đoán và giải quyết bởi
+[@igitur](https://github.com/igitur) trong các PR #111 và #113.
 
-- **Custom HTTPS ports work as entered** — an explicit Port field value is
-  honoured even when it is `8642`; leaving the field blank still infers `443`
-  for HTTPS and `8642` for HTTP.
-- **Turns survive leaving the chat** — navigating away during a running turn no
-  longer closes its SSE connection and interrupts the work server-side. The
-  detached client is released after completion, failure, cancellation, or its
-  safety timeout.
+- **Cổng HTTPS tùy chỉnh hoạt động như đã nhập** — giá trị trường Cổng rõ ràng được
+  tôn trọng ngay cả khi là `8642`; để trống trường vẫn suy ra `443`
+  cho HTTPS và `8642` cho HTTP.
+- **Các vòng sống sót khi rời khỏi cuộc trò chuyện** — điều hướng đi trong một vòng đang chạy không
+  còn đóng kết nối SSE của nó và làm gián đoạn công việc phía máy chủ. Máy khách
+  tách rời được giải phóng sau khi hoàn thành, thất bại, hủy bỏ hoặc
+  hết thời gian chờ an toàn của nó.
 
-## What's new in v2.1.7
+## Có gì mới trong v2.1.7
 
-v2.1.7 brings the Android daily-driver workspace into line with stock Hermes
-gateways through the extensive compatibility work contributed by
-[@Thaeland](https://github.com/Thaeland) in PR #106.
+v2.1.7 đưa không gian làm việc sử dụng hàng ngày Android phù hợp với các gateway
+Hermes cổ điển thông qua công việc tương thích rộng rãi được đóng góp bởi
+[@Thaeland](https://github.com/Thaeland) trong PR #106.
 
-- **Reliable detached replies** — interrupted socket connections now resume the
-  stored session, keep retrying across long-running turns and app backgrounding,
-  and use durable message IDs so replies are recovered even when the server's
-  capped history window rolls over.
-- **Stock Projects support** — new Projects receive safely provisioned folders,
-  chat moves use the stock `session.workspace.move` contract, and project labels,
-  archived chats, migration, search, and compatibility states follow the real
-  gateway wire shapes.
-- **Correct session pagination** — pinned-session backfills can no longer skip,
-  duplicate, or prematurely end later pages. Mutable OFFSET scans no longer
-  delete local assignments they cannot prove are stale.
-- **Safer transport and offline state** — stale runtime bindings reattach,
-  socket creation and authentication are single-flight, network requests are
-  bounded, and concurrent Project mutations cannot persist optimistic or stale
-  cache snapshots.
-- **Additional resilience** — archived reads are profile-scoped and complete,
-  machine sessions stay out of human chat lists, deliberate reconnects are
-  explained, and Android can discover installed speech-recognition services.
+- **Phản hồi tách rời đáng tin cậy** — kết nối socket bị gián đoạn hiện tiếp tục
+  phiên đã lưu, tiếp tục thử lại qua các vòng chạy dài và ứng dụng chạy nền,
+  và sử dụng ID tin nhắn bền vững để phản hồi được khôi phục ngay cả khi cửa sổ
+  lịch sử giới hạn của máy chủ cuộn qua.
+- **Hỗ trợ Dự án cổ điển** — các Dự án mới nhận các thư mục được cung cấp an toàn,
+  di chuyển cuộc trò chuyện sử dụng hợp đồng `session.workspace.move` cổ điển, và nhãn dự án,
+  cuộc trò chuyện đã lưu trữ, di chuyển, tìm kiếm và trạng thái tương thích theo hình dạng
+  dây thực của gateway.
+- **Phân trang phiên chính xác** — tái tô phiên ghim không thể bỏ qua,
+  nhân đôi hoặc kết thúc sớm các trang sau. Quét OFFSET có thể thay đổi không còn
+  xóa các phân công cục bộ mà chúng không thể chứng minh là cũ.
+- **Truyền tải an toàn hơn và trạng thái ngoại tuyến** — các ràng buộc runtime cũ tái gắn,
+  tạo socket và xác thực là đơn chuyến, yêu cầu mạng bị
+  giới hạn và các biến đổi Dự án đồng thời không thể duy trì các snapshot
+  cache lạc quan hoặc cũ.
+- **Khả năng phục hồi bổ sung** — đọc đã lưu trữ có phạm vi hồ sơ và hoàn chỉnh,
+  các phiên máy ở ngoài danh sách cuộc trò chuyện con người, kết nối lại có chủ ý được
+  giải thích và Android có thể phát hiện các dịch vụ nhận dạng giọng nói đã cài đặt.
 
-## What's new in v2.1.6
+## Có gì mới trong v2.1.6
 
-- **Private gateway certificates** — Android now trusts certificate authorities
-  that the device user explicitly installed, so private Caddy and Tailscale
-  gateway endpoints can connect without weakening normal certificate checks
+- **Chứng chỉ gateway riêng tư** — Android hiện tin tưởng các cơ quan cấp chứng chỉ
+  mà người dùng thiết bị đã cài đặt rõ ràng, vì vậy các điểm cuối gateway Caddy và Tailscale
+  riêng tư có thể kết nối mà không làm yếu các kiểm tra chứng chỉ bình thường
   (#108).
 
-## What's new in v2.1.0
+## Có gì mới trong v2.1.0
 
-v2.1.0 merges the community daily-driver workspace edition from
-[@CarlosReyesPena](https://github.com/CarlosReyesPena) (PR #88): a new
-Workspace home with Projects, Chats and Activity panes, server-backed session
-search, config backup and restore, and quick-chat intents — plus a large
-accompanying test suite (900+ tests).
+v2.1.0 hợp nhất phiên bản không gian làm việc sử dụng hàng ngày cộng đồng từ
+[@CarlosReyesPena](https://github.com/CarlosReyesPena) (PR #88): một Trang chủ
+Workspace mới với các ngăn Dự án, Cuộc trò chuyện và Hoạt động, tìm kiếm phiên
+được hỗ trợ bởi máy chủ, sao lưu và khôi phục cấu hình và ý định cuộc trò chuyện nhanh —
+cộng với một bộ kiểm thử lớn kèm theo (900+ kiểm thử).
 
-- **Workspace shell** — a new Home with attention-ranked "needs you" digest,
-  global New (project or quick) chat button, Activity operational timeline of
-  gateway turns, and a More pane that routes Cron, Skills, Memory, Settings
-  and the Hermes dashboard.
-- **Projects pane** — server-owned Hermes projects via the gateway
-  `projects.*` RPC family: project tree overview, per-project chats,
-  migration preview and write path for local Spaces, chat moves between
-  projects, per-project search, and safe deletion. Legacy gateways degrade
-  gracefully to a labelled local-only compatibility mode.
-- **Chats browser** — All / Recent / Unassigned / Archived filters, date
-  grouping, running/done status, pinned and archived session flags, and a
-  session→project label fallback for older APIs.
-- **Session search** — three selectable modes: on-device (default), full-text
-  via the dashboard FTS5 endpoint with matching-excerpt results, and
-  AI-assisted query rewriting through Hermes (requires the corresponding
-  server support). Mode is remembered per connection; provider API keys never
-  leave the server.
-- **Configuration backup & restore** — export all connections and app
-  preferences to a single encrypted file (PBKDF2 + AES-256-GCM), import in
-  merge or replace mode, with restore reachable from the empty-connection
-  state before any server is configured.
-- **Quick chat lifecycle** — share-target and app-shortcut entry points,
-  share/review sheets for text and files, and a 72-hour quick-chat archive
-  policy that never archives blocked or running work.
-- **Resilience** — gateway capability discovery (never assume the newest
-  server), fresh TCP per request with a 20 s timeout to fix stale keep-alive
-  hangs, and runtime Android 13+ notification permission request.
-- **Chat UI** — sticky context header (project, model, reasoning effort,
-  connection state), You/Hermes role labels, long-press action sheet, real
-  fenced code blocks with copy and wrap/scroll toggle, and full tool output
-  on expanded activity cards.
+- **Vỏ không gian làm việc** — Trang chủ mới với tóm tắt "cần bạn" xếp hạng theo sự chú ý,
+  nút Mới (dự án hoặc nhanh) toàn cục, dòng thời gian hoạt động Hoạt động của
+  các vòng gateway và một ngăn Thêm định tuyến Cron, Kỹ năng, Bộ nhớ, Cài đặt
+  và bảng điều khiển Hermes.
+- **Ngăn Dự án** — dự án Hermes thuộc sở hữu máy chủ thông qua họ RPC gateway
+  `projects.*`: tổng quan cây dự án, cuộc trò chuyện theo dự án,
+  xem trước di chuyển và đường dẫn ghi cho Không gian cục bộ, di chuyển cuộc trò chuyện giữa
+  các dự án, tìm kiếm theo dự án và xóa an toàn. Các gateway cũ giảm cấp
+  một cách duyên dáng sang chế độ tương thích chỉ cục bộ có nhãn.
+- **Trình duyệt cuộc trò chuyện** — bộ lọc Tất cả / Gần đây / Chưa gán / Đã lưu trữ, nhóm
+  ngày, trạng thái đang chạy/hoàn thành, cờ phiên ghim và đã lưu trữ và
+  nhãn phiên→dự án dự phòng cho các API cũ hơn.
+- **Tìm kiếm phiên** — ba chế độ có thể chọn: trên thiết bị (mặc định), toàn văn
+  thông qua điểm cuối FTS5 bảng điều khiển với kết quả trích xuất khớp và
+  viết lại truy vấn hỗ trợ AI thông qua Hermes (yêu cầu
+  hỗ trợ máy chủ tương ứng). Chế độ được ghi nhớ cho mỗi kết nối; khóa API nhà cung cấp không bao giờ
+  rời khỏi máy chủ.
+- **Sao lưu & khôi phục cấu hình** — xuất tất cả các kết nối và
+  tùy chọn ứng dụng vào một tệp được mã hóa duy nhất (PBKDF2 + AES-256-GCM), nhập ở
+  chế độ hợp nhất hoặc thay thế, với khôi phục có thể truy cập từ trạng thái kết nối trống
+  trước khi cấu hình bất kỳ máy chủ nào.
+- **Vòng đời cuộc trò chuyện nhanh** — các điểm đầu vào mục tiêu chia sẻ và lối tắt ứng dụng,
+  trang chia sẻ/đánh giá cho văn bản và tệp và chính sách lưu trữ cuộc trò chuyện nhanh 72 giờ
+  không bao giờ lưu trữ công việc bị chặn hoặc đang chạy.
+- **Khả năng phục hồi** — khám phá khả năng gateway (không bao giờ giả định máy chủ
+  mới nhất), TCP mới cho mỗi yêu cầu với thời gian chờ 20 giây để sửa keep-alive
+  cũ bị treo và yêu cầu quyền thông báo runtime Android 13+.
+- **Giao diện người dùng cuộc trò chuyện** — tiêu đề ngữ cảnh dính (dự án, mô hình, nỗ lực lý luận,
+  trạng thái kết nối), nhãn vai trò Bạn/Hermes, trang hành động nhấn giữ, khối mã
+  có hàng rào thực với sao chép và chuyển đổi xuống dòng/cuộn và đầu ra công cụ đầy đủ
+  trên thẻ hoạt động được mở rộng.
 
-## What's new in v2.0.1
+## Có gì mới trong v2.0.1
 
-- **Background turn notifications** — Android notifications fire when a Desktop
-  Gateway turn completes while the app is backgrounded, mirroring Hermes Desktop
-  tray notification behaviour. Notifications are automatically cleared when you
-  return to the app.
-- **Scroll bug resolved** — the inherited mid-history scroll-jump on session
-  reopen (from upstream PR #71) has been fully resolved. The
-  `ChatScrollCoordinator` only aligns to the end on initial load, never inside
-  the streaming completion handler.
+- **Thông báo vòng nền** — Thông báo Android kích hoạt khi một vòng Desktop
+  Gateway hoàn thành trong khi ứng dụng ở nền, phản ánh hành vi
+  thông báo khay Hermes Desktop. Thông báo tự động xóa khi bạn
+  quay lại ứng dụng.
+- **Đã giải quyết lỗi cuộn** — lỗi nhảy cuộn giữa lịch sử kế thừa khi mở lại phiên
+  (từ PR upstream #71) đã được giải quyết hoàn toàn.
+  `ChatScrollCoordinator` chỉ căn chỉnh đến cuối khi tải ban đầu, không bao giờ bên trong
+  trình xử lý hoàn thành streaming.
 
-## What's new in v2.0.0
+## Có gì mới trong v2.0.0
 
-v2.0.0 merges the community Remote Gateway edition from
+v2.0.0 hợp nhất phiên bản Remote Gateway cộng đồng từ
 [@CristianGCiocoi](https://github.com/CristianGCiocoi).
 
-- **Unified Desktop Gateway JSON-RPC transport** — text, images, and files share
-  one WebSocket session instead of split REST+WebSocket paths.
-- **Per-chat model and thinking-effort selection** without changing the profile
-  default.
-- **Multi-attachment uploads** — up to 10 files per message, 16 MiB each.
-- **Copy/Select, Read Aloud, Edit+Resend, Regenerate, Stop, Export, Search,
-  Rename, Branch, Delete** for conversations.
-- **Native Desktop Gateway event handling** — approvals, sudo, secrets,
-  clarifications, reasoning, tool activity, notifications, background results,
-  reviews, and subagents.
-- **Voice dictation** — stage voice input before explicit send.
-- **Durable turn recovery** — completed gateway responses survive Android
-  process-kill lifecycle events.
-- **Persistent accessible text size** setting.
-- **ATLAS document intake metadata** for mobile uploads.
-- **Secure Android credential storage** with platform key material.
-- **113+ Flutter tests** plus a synthetic gateway contract suite under
+- **Truyền tải JSON-RPC Desktop Gateway thống nhất** — văn bản, hình ảnh và tệp chia sẻ
+  một phiên WebSocket thay vì đường dẫn REST+WebSocket tách biệt.
+- **Chọn mô hình và nỗ lực suy nghĩ cho từng cuộc trò chuyện** mà không thay đổi
+  mặc định hồ sơ.
+- **Tải lên nhiều tệp đính kèm** — lên đến 10 tệp mỗi tin nhắn, 16 MiB mỗi tệp.
+- **Sao chép/Chọn, Đọc to, Chỉnh sửa+Gửi lại, Tạo lại, Dừng, Xuất, Tìm kiếm,
+  Đổi tên, Nhánh, Xóa** cho các cuộc trò chuyện.
+- **Xử lý sự kiện Desktop Gateway gốc** — phê duyệt, sudo, secrets,
+  làm rõ, lý luận, hoạt động công cụ, thông báo, kết quả nền,
+  đánh giá và subagent.
+- **Nhập giọng nói** — chuẩn bị đầu vào giọng nói trước khi gửi rõ ràng.
+- **Khôi phục vòng bền vững** — phản hồi gateway hoàn thành sống sót qua các sự kiện
+  vòng đời hủy quy trình Android.
+- **Cài đặt kích thước văn bản có thể truy cập liên tục**.
+- **Siêu dữ liệu intake tài liệu ATLAS** cho tải lên di động.
+- **Lưu trữ thông tin xác thực Android an toàn** với tài liệu khóa nền tảng.
+- **113+ kiểm thử Flutter** cộng với một bộ hợp đồng gateway tổng hợp dưới
   `tools/fake_gateway/`.
 
-## What's new in v1.0.8
+## Có gì mới trong v1.0.8
 
-- **Reverse-proxy path prefixes** — configure separate path prefixes for the Gateway API and dashboard, e.g. `/profile/peter` before `/api` and `/v1`, and `/dashboard` before dashboard `/api` routes.
-- **Proxied dashboard mode** — enable **Dashboard behind proxy** when nginx/Caddy/your host injects dashboard authentication. In this mode the app sends clean dashboard requests without trying to scrape a dashboard session token or perform password login.
-- **Prefix-aware validation and chat** — API-key validation, session browsing, existing chat history, streaming chat completions, and dashboard drawer screens all use the configured prefixes.
+- **Tiền tố đường dẫn reverse-proxy** — cấu hình các tiền tố đường dẫn riêng biệt cho Gateway API và bảng điều khiển, ví dụ: `/profile/peter` trước `/api` và `/v1`, và `/dashboard` trước các tuyến `/api` bảng điều khiển.
+- **Chế độ bảng điều khiển được proxy** — bật **Dashboard behind proxy** khi nginx/Caddy/máy chủ của bạn tiêm xác thực bảng điều khiển. Trong chế độ này, ứng dụng gửi các yêu cầu bảng điều khiển sạch mà không cố gắng lấy token phiên bảng điều khiển hoặc thực hiện đăng nhập mật khẩu.
+- **Xác thực và cuộc trò chuyện nhận biết tiền tố** — xác thực khóa API, duyệt phiên, lịch sử cuộc trò chuyện hiện có, hoàn thành cuộc trò chuyện streaming và màn hình ngăn kéo bảng điều khiển đều sử dụng các tiền tố đã cấu hình.
 
-## What's new in v1.0.7
+## Có gì mới trong v1.0.7
 
-- **Password-protected dashboards** — the Memory/Cron/Skills/Settings tabs now work against a dashboard secured with basic-auth, not just an open (`--insecure`) one. The app logs in via the dashboard's `/auth/password-login` flow and reuses the session cookie (the same mechanism the desktop client uses).
-- **Configurable dashboard port** — set a custom dashboard port per connection when it isn't the default `9119`.
-- **Dashboard details in the connection flow** — set the dashboard port/username/password while adding a connection (expand **Custom dashboard details**) or later via **⋮ → Dashboard Login**, with validation before saving.
+- **Bảng điều khiển được bảo vệ bằng mật khẩu** — các tab Bộ nhớ/Cron/Kỹ năng/Cài đặt hiện hoạt động với bảng điều khiển được bảo mật bằng basic-auth, không chỉ bảng điều khiển mở (`--insecure`). Ứng dụng đăng nhập thông qua luồng `/auth/password-login` của bảng điều khiển và tái sử dụng cookie phiên (cơ chế tương tự mà máy khách máy tính để bàn sử dụng).
+- **Cổng bảng điều khiển có thể cấu hình** — đặt cổng bảng điều khiển tùy chỉnh cho mỗi kết nối khi nó không phải là mặc định `9119`.
+- **Chi tiết bảng điều khiển trong luồng kết nối** — đặt cổng/tên người dùng/mật khẩu bảng điều khiển trong khi thêm kết nối (mở rộng **Custom dashboard details**) hoặc sau đó thông qua **⋮ → Dashboard Login**, với xác thực trước khi lưu.
 
-## What's new in v1.0.6
+## Có gì mới trong v1.0.6
 
-- **Voice chat support** — tap the microphone in chat to dictate a message to Hermes, and Hermes can speak the response back.
-- Spoken replies can be toggled from the chat input bar.
-- Android/iOS microphone and speech-recognition permissions are included.
+- **Hỗ trợ cuộc trò chuyện giọng nói** — nhấn micrô trong cuộc trò chuyện để đọc một tin nhắn cho Hermes, và Hermes có thể nói lại phản hồi.
+- Phản hồi nói có thể được bật tắt từ thanh nhập cuộc trò chuyện.
+- Quyền micrô và nhận dạng giọng nói Android/iOS được bao gồm.
 
-## Features
+## Tính năng
 
-- **Hermes chat on Android** — browse sessions, create new chats, and send prompts to your Hermes Agent.
-- **Streaming responses** — chat uses the Hermes Gateway OpenAI-compatible streaming endpoint: `POST /v1/chat/completions`. Tokens appear in real-time with smooth auto-scroll.
-- **Messaging-style UI** — dark/light/system themes, gold Hermes accent color (`#D4AF37`), markdown rendering, relative timestamps, and responsive phone/tablet layouts.
-- **Gold/black Hermes branding** — distinctive gold accent on black background, custom app icon with mipmap densities, agent messages use grey bubbles.
-- **Gateway API integration** — sessions and chat run through the Hermes Gateway API Server, normally on port `8642`, with HTTP and HTTPS endpoints supported. Reverse-proxy deployments can set a gateway path prefix that is applied before `/api` and `/v1` routes.
-- **Dashboard integrations** — Memory, Cron Jobs, Skills, and Settings screens use the Hermes dashboard API (default port `9119`, configurable per connection) on the same host. Works with open (`--insecure`) dashboards, **password-protected dashboards** via the built-in login, and proxied dashboards where auth is injected upstream.
-- **Model settings** — view and change the configured Hermes model where the dashboard exposes model settings.
-- **Cron management** — list, trigger, pause/resume, create, edit, and delete scheduled Hermes cron jobs.
-- **Skills browser** — view available Hermes skills with descriptions and trigger conditions.
-- **Memory viewer** — inspect conversation memory across sessions.
-- **Verbose mode toggle** — show raw message metadata (role, tool calls, timestamps) in chat.
-- **Three-way theme toggle** — Dark / Light / System default.
-- **Keyboard handling** — auto-scroll on keyboard open, send action on Enter, FAB to scroll to bottom.
-- **Voice chat** — microphone dictation sends recognised speech to Hermes, with optional text-to-speech replies.
+- **Cuộc trò chuyện Hermes trên Android** — duyệt các phiên, tạo cuộc trò chuyện mới và gửi dấu nhắc cho Hermes Agent của bạn.
+- **Phản hồi streaming** — cuộc trò chuyện sử dụng điểm cuối streaming tương thích OpenAI của Hermes Gateway: `POST /v1/chat/completions`. Các token xuất hiện theo thời gian thực với cuộn tự động mượt mà.
+- **Giao diện người dùng kiểu nhắn tin** — chủ đề tối/sáng/hệ thống, màu nhấn Hermes vàng (`#D4AF37`), kết xuất markdown, dấu thời gian tương đối và bố cục điện thoại/máy tính bảng đáp ứng.
+- **Thương hiệu Hermes vàng/đen** — nhấn vàng nổi bật trên nền đen, biểu tượng ứng dụng tùy chỉnh với mật độ mipmap, tin nhắn tác nhân sử dụng bong bóng xám.
+- **Tích hợp Gateway API** — các phiên và cuộc trò chuyện chạy thông qua Hermes Gateway API Server, thường trên cổng `8642`, với các điểm cuối HTTP và HTTPS được hỗ trợ. Triển khai reverse-proxy có thể đặt tiền tố đường dẫn gateway được áp dụng trước các tuyến `/api` và `/v1`.
+- **Tích hợp bảng điều khiển** — các màn hình Bộ nhớ, Cron Jobs, Kỹ năng và Cài đặt sử dụng API bảng điều khiển Hermes (cổng mặc định `9119`, có thể cấu hình cho mỗi kết nối) trên cùng máy chủ. Hoạt động với bảng điều khiển mở (`--insecure`), **bảng điều khiển được bảo vệ bằng mật khẩu** thông qua đăng nhập tích hợp và bảng điều khiển được proxy nơi xác thực được tiêm ở upstream.
+- **Cài đặt mô hình** — xem và thay đổi mô hình Hermes đã cấu hình nơi bảng điều khiển hiển thị cài đặt mô hình.
+- **Quản lý Cron** — liệt kê, kích hoạt, tạm dừng/tiếp tục, tạo, chỉnh sửa và xóa các cron job Hermes đã lên lịch.
+- **Trình duyệt kỹ năng** — xem các kỹ năng Hermes có sẵn với mô tả và điều kiện kích hoạt.
+- **Trình xem bộ nhớ** — kiểm tra bộ nhớ cuộc trò chuyện qua các phiên.
+- **Chuyển đổi chế độ chi tiết** — hiển thị siêu dữ liệu tin nhắn thô (vai trò, lời gọi công cụ, dấu thời gian) trong cuộc trò chuyện.
+- **Chuyển đổi chủ đề ba chiều** — Tối / Sáng / Mặc định hệ thống.
+- **Xử lý bàn phím** — cuộn tự động khi mở bàn phím, hành động gửi khi Enter, FAB để cuộn xuống dưới cùng.
+- **Cuộc trò chuyện giọng nói** — nhập micrô gửi giọng nói được nhận dạng cho Hermes, với phản hồi chuyển văn bản thành giọng nói tùy chọn.
 
-## Screenshots
+## Ảnh chụp màn hình
 
 <table>
   <tr>
-    <td align="center"><img src="docs/screenshots/01-session-list.jpg" width="220" alt="Session list"><br><sub>Session list</sub></td>
-    <td align="center"><img src="docs/screenshots/02-navigation-drawer.jpg" width="220" alt="Navigation drawer"><br><sub>Navigation drawer</sub></td>
+    <td align="center"><img src="docs/screenshots/01-session-list.jpg" width="220" alt="Danh sách phiên"><br><sub>Danh sách phiên</sub></td>
+    <td align="center"><img src="docs/screenshots/02-navigation-drawer.jpg" width="220" alt="Ngăn kéo điều hướng"><br><sub>Ngăn kéo điều hướng</sub></td>
     <td align="center"><img src="docs/screenshots/03-cron-jobs.jpg" width="220" alt="Cron jobs"><br><sub>Cron jobs</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/screenshots/04-add-cron-job.jpg" width="220" alt="Add cron job"><br><sub>Add cron job</sub></td>
-    <td align="center"><img src="docs/screenshots/05-memory.jpg" width="220" alt="Memory"><br><sub>Memory</sub></td>
-    <td align="center"><img src="docs/screenshots/06-settings.jpg" width="220" alt="Settings"><br><sub>Settings</sub></td>
+    <td align="center"><img src="docs/screenshots/04-add-cron-job.jpg" width="220" alt="Thêm cron job"><br><sub>Thêm cron job</sub></td>
+    <td align="center"><img src="docs/screenshots/05-memory.jpg" width="220" alt="Bộ nhớ"><br><sub>Bộ nhớ</sub></td>
+    <td align="center"><img src="docs/screenshots/06-settings.jpg" width="220" alt="Cài đặt"><br><sub>Cài đặt</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/screenshots/07-skills.jpg" width="220" alt="Skills"><br><sub>Skills</sub></td>
+    <td align="center"><img src="docs/screenshots/07-skills.jpg" width="220" alt="Kỹ năng"><br><sub>Kỹ năng</sub></td>
   </tr>
 </table>
 
-## Quick start
+## Bắt đầu nhanh
 
-### Prerequisites
+### Yêu cầu
 
-- Android device or emulator (Android 8+).
-- Hermes Agent installed on the host machine.
-- Hermes Gateway API Server reachable from the Android device.
-- `API_SERVER_KEY` from the Hermes host environment (`~/.hermes/.env`).
-- Optional: Hermes dashboard reachable for Memory/Cron/Skills/Settings screens.
+- Thiết bị hoặc trình giả lập Android (Android 8+).
+- Hermes Agent được cài đặt trên máy chủ.
+- Hermes Gateway API Server có thể truy cập từ thiết bị Android.
+- `API_SERVER_KEY` từ môi trường máy chủ Hermes (`~/.hermes/.env`).
+- Tùy chọn: Bảng điều khiển Hermes có thể truy cập cho các màn hình Bộ nhớ/Cron/Kỹ năng/Cài đặt.
 
-Hermes Agent docs: <https://hermes-agent.nousresearch.com/docs>
+Tài liệu Hermes Agent: <https://hermes-agent.nousresearch.com/docs>
 
-### Install the APK
+### Cài đặt APK
 
-Download the latest APK from this repository's
-[GitHub Releases](https://github.com/rusty4444/hermes-android/releases) page.
+Tải xuống APK mới nhất từ trang
+[GitHub Releases](https://github.com/rusty4444/hermes-android/releases) của kho lưu trữ này.
 
-For most Android phones, install the ARM64 APK:
+Đối với hầu hết điện thoại Android, cài đặt APK ARM64:
 
 ```bash
 adb install Hermes-Android-2.0.1-arm64-release.apk
 ```
 
-If sideloading directly on Android, enable **Install unknown apps** for your browser or file manager, then open the downloaded APK.
+Nếu cài đặt trực tiếp trên Android, bật **Install unknown apps** cho trình duyệt hoặc trình quản lý tệp của bạn, sau đó mở APK đã tải xuống.
 
-### 1. Start the Gateway API Server
+### 1. Khởi động Gateway API Server
 
-The Android chat/session features connect to the Hermes Gateway API Server. It must bind to an address your phone can reach, not only `127.0.0.1`.
+Các tính năng cuộc trò chuyện/phiên Android kết nối với Hermes Gateway API Server. Nó phải liên kết với địa chỉ mà điện thoại của bạn có thể truy cập, không chỉ `127.0.0.1`.
 
-Use your normal Hermes gateway/API-server startup command and confirm:
+Sử dụng lệnh khởi động gateway/API-server Hermes bình thường của bạn và xác nhận:
 
-- host/IP is reachable from Android
-- port is usually `8642`
-- `API_SERVER_KEY` is available in `~/.hermes/.env`
+- máy chủ/IP có thể truy cập từ Android
+- cổng thường là `8642`
+- `API_SERVER_KEY` có sẵn trong `~/.hermes/.env`
 
-### 2. Optional: start the dashboard for drawer features
+### 2. Tùy chọn: khởi động bảng điều khiển cho các tính năng ngăn kéo
 
-Memory, Cron Jobs, Skills, and Settings use the Hermes dashboard API (default port `9119`).
+Bộ nhớ, Cron Jobs, Kỹ năng và Cài đặt sử dụng API bảng điều khiển Hermes (cổng mặc định `9119`).
 
-Open dashboard (no login):
+Mở bảng điều khiển (không đăng nhập):
 
 ```bash
 hermes dashboard --insecure --host 0.0.0.0 --tui --port 9119
 ```
 
-Password-protected dashboard (recommended on shared networks) — start it with a
-basic-auth provider instead of `--insecure`, then enter the username/password in
-the app's **Dashboard / Proxy Settings** dialog (see [Dashboard access](#4-optional-configure-dashboard-access)).
+Bảng điều khiển được bảo vệ bằng mật khẩu (được khuyến nghị trên mạng chia sẻ) — khởi động nó với
+nhà cung cấp basic-auth thay vì `--insecure`, sau đó nhập tên người dùng/mật khẩu trong
+hộp thoại **Dashboard / Proxy Settings** của ứng dụng (xem [Truy cập bảng điều khiển](#4-tùy-chọn-cấu-hình-truy-cập-bảng-điều-khiển)).
 
-> `--host 0.0.0.0` is required when connecting from another device. A localhost-only dashboard cannot be reached from Android.
+> `--host 0.0.0.0` là bắt buộc khi kết nối từ thiết bị khác. Bảng điều khiển chỉ localhost không thể truy cập từ Android.
 
-### 3. Connect the app
+### 3. Kết nối ứng dụng
 
-1. Put the Android device and Hermes host on the same Wi-Fi/LAN (or connect via Tailscale — see below).
-2. Find the Hermes host IP:
+1. Đặt thiết bị Android và máy chủ Hermes trên cùng Wi-Fi/LAN (hoặc kết nối qua Tailscale — xem bên dưới).
+2. Tìm IP máy chủ Hermes:
 
    ```bash
    # macOS
@@ -335,73 +334,73 @@ the app's **Dashboard / Proxy Settings** dialog (see [Dashboard access](#4-optio
    hostname -I | awk '{print $1}'
    ```
 
-3. Open the Hermes Android app.
-4. Tap **+** to add a connection.
-5. Enter:
-   - **Label:** any name, e.g. `Home`
-   - **Host:** the host IP, e.g. `192.168.1.50`
+3. Mở ứng dụng Hermes Android.
+4. Nhấn **+** để thêm kết nối.
+5. Nhập:
+   - **Label:** bất kỳ tên nào, ví dụ: `Home`
+   - **Host:** IP máy chủ, ví dụ: `192.168.1.50`
    - **Port:** `8642`
-   - **API Key:** `API_SERVER_KEY` from the Hermes machine
-6. If your deployment is behind a reverse proxy path, expand **Custom proxy and dashboard details** and set the gateway/dashboard prefixes there. Do not put URL paths in the Host field; the Host field is just the scheme, hostname, and optional port.
-7. Tap the saved connection to browse sessions.
-8. Tap a session to start chatting, or create a new one.
+   - **API Key:** `API_SERVER_KEY` từ máy Hermes
+6. Nếu triển khai của bạn nằm sau đường dẫn reverse proxy, mở rộng **Custom proxy and dashboard details** và đặt các tiền tố gateway/bảng điều khiển ở đó. Không đặt đường dẫn URL trong trường Host; trường Host chỉ là scheme, hostname và cổng tùy chọn.
+7. Nhấn kết nối đã lưu để duyệt các phiên.
+8. Nhấn một phiên để bắt đầu trò chuyện hoặc tạo một phiên mới.
 
-### 4. Optional: configure dashboard access
+### 4. Tùy chọn: cấu hình truy cập bảng điều khiển
 
-The drawer screens (Memory, Cron Jobs, Skills, Settings) talk to the Hermes
-dashboard, which can run on a different port from the Gateway API Server and may
-be password-protected. Configure it per connection — either while adding the
-connection (expand **Custom proxy and dashboard details** in the Add Connection dialog) or
-afterwards:
+Các màn hình ngăn kéo (Bộ nhớ, Cron Jobs, Kỹ năng, Cài đặt) nói chuyện với bảng điều khiển
+Hermes, có thể chạy trên cổng khác với Gateway API Server và có thể
+được bảo vệ bằng mật khẩu. Cấu hình nó cho mỗi kết nối — khi thêm
+kết nối (mở rộng **Custom proxy and dashboard details** trong hộp thoại Add Connection) hoặc
+sau đó:
 
-1. On the connections list, tap the **⋮** menu on a connection → **Dashboard / Proxy Settings**.
-2. Fill in:
-   - **Gateway path prefix** — optional reverse-proxy path before gateway `/api`
-     and `/v1` routes, e.g. `/profile/peter`.
-   - **Dashboard path prefix** — optional reverse-proxy path before dashboard
-     `/api` routes, e.g. `/dashboard`.
-   - **Dashboard behind proxy** — enable this when the proxy injects dashboard
-     authentication and the app should not fetch a dashboard SPA token or log in
-     with username/password.
-   - **Dashboard Port** — leave blank to use the default (`9119` for HTTP, or the
-     same external port for HTTPS deployments), or set an explicit port if your
-     dashboard is exposed elsewhere.
-   - **Username / Password** — only for a password-protected dashboard. Leave
-     both blank for an open (`--insecure`) dashboard.
-   - **Hermes profile** — only when the dashboard is a *machine-level* one
-     (`hermes dashboard` / `hermes serve` without `--isolated`) that hosts
-     several profiles. Hermes scopes each JSON-RPC call on that socket by a
-     `profile` field in the request, and falls back to its own default
-     profile when it is missing, so without this field chats can quietly land
-     in the wrong profile. Use the profile name exactly as in `hermes profile
-     list`, e.g. `sol`. Leave blank for an isolated per-profile dashboard.
-3. Tap **Save**. The app validates the settings against the dashboard before
-   storing them.
+1. Trong danh sách kết nối, nhấn menu **⋮** trên một kết nối → **Dashboard / Proxy Settings**.
+2. Điền vào:
+   - **Gateway path prefix** — đường dẫn reverse-proxy tùy chọn trước các tuyến gateway `/api`
+     và `/v1`, ví dụ: `/profile/peter`.
+   - **Dashboard path prefix** — đường dẫn reverse-proxy tùy chọn trước các tuyến
+     `/api` bảng điều khiển, ví dụ: `/dashboard`.
+   - **Dashboard behind proxy** — bật điều này khi proxy tiêm xác thực bảng điều khiển
+     và ứng dụng không nên lấy token SPA bảng điều khiển hoặc đăng nhập
+     bằng tên người dùng/mật khẩu.
+   - **Dashboard Port** — để trống để sử dụng mặc định (`9119` cho HTTP hoặc
+     cổng bên ngoài giống nhau cho triển khai HTTPS), hoặc đặt cổng rõ ràng nếu
+     bảng điều khiển của bạn được hiển thị ở nơi khác.
+   - **Username / Password** — chỉ cho bảng điều khiển được bảo vệ bằng mật khẩu. Để
+     cả hai trống cho bảng điều khiển mở (`--insecure`).
+   - **Hermes profile** — chỉ khi bảng điều khiển là bảng điều khiển *cấp máy*
+     (`hermes dashboard` / `hermes serve` không có `--isolated`) lưu trữ
+     nhiều hồ sơ. Hermes xác định phạm vi mỗi lời gọi JSON-RPC trên socket đó bằng
+     trường `profile` trong yêu cầu và quay lại hồ sơ mặc định
+     của chính nó khi nó bị thiếu, vì vậy không có trường này, các cuộc trò chuyện có thể lặng lẽ hạ cánh
+     trong hồ sơ sai. Sử dụng tên hồ sơ chính xác như trong `hermes profile
+     list`, ví dụ: `sol`. Để trống cho bảng điều khiển riêng biệt theo hồ sơ.
+3. Nhấn **Save**. Ứng dụng xác thực cài đặt với bảng điều khiển trước
+   khi lưu chúng.
 
-When credentials are set, the app authenticates via the dashboard's
-`/auth/password-login` flow and reuses the returned session cookie — the same
-mechanism the Hermes desktop client uses.
+Khi thông tin xác thực được đặt, ứng dụng xác thực thông qua luồng
+`/auth/password-login` của bảng điều khiển và tái sử dụng cookie phiên được trả về — cơ chế
+tương tự mà máy khách Hermes máy tính để bàn sử dụng.
 
-## Connect remotely with Tailscale
+## Kết nối từ xa với Tailscale
 
-Tailscale gives your phone and Hermes machine a private encrypted network, so you do **not** need to expose Hermes directly to the public internet.
+Tailscale cung cấp cho điện thoại và máy Hermes của bạn một mạng mã hóa riêng tư, vì vậy bạn **không** cần phải hiển thị Hermes trực tiếp ra internet công cộng.
 
-Tailscale website: <https://tailscale.com/>
+Trang web Tailscale: <https://tailscale.com/>
 
-### Install Tailscale on Android
+### Cài đặt Tailscale trên Android
 
-1. Install Tailscale for Android: <https://tailscale.com/download/android>
-2. Sign in with the same Tailscale account/tailnet used by your Hermes machine.
-3. Leave Tailscale connected while using the Hermes app.
+1. Cài đặt Tailscale cho Android: <https://tailscale.com/download/android>
+2. Đăng nhập bằng cùng tài khoản/tailnet Tailscale được sử dụng bởi máy Hermes của bạn.
+3. Để Tailscale kết nối trong khi sử dụng ứng dụng Hermes.
 
-### Install Tailscale on the Hermes machine
+### Cài đặt Tailscale trên máy Hermes
 
-Install Tailscale for your OS: <https://tailscale.com/download>
+Cài đặt Tailscale cho hệ điều hành của bạn: <https://tailscale.com/download>
 
-Examples:
+Ví dụ:
 
 ```bash
-# macOS with Homebrew
+# macOS với Homebrew
 brew install --cask tailscale
 
 # Debian/Ubuntu
@@ -409,159 +408,159 @@ curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up
 ```
 
-After the Hermes machine is connected, get its Tailscale address:
+Sau khi máy Hermes được kết nối, lấy địa chỉ Tailscale của nó:
 
 ```bash
 tailscale ip -4
 ```
 
-You can also enable MagicDNS and use the machine name instead of the `100.x.y.z` IP:
+Bạn cũng có thể bật MagicDNS và sử dụng tên máy thay vì IP `100.x.y.z`:
 
-- MagicDNS docs: <https://tailscale.com/kb/1081/magicdns>
+- Tài liệu MagicDNS: <https://tailscale.com/kb/1081/magicdns>
 
-### Connect the app over Tailscale
+### Kết nối ứng dụng qua Tailscale
 
-In the Android app connection dialog:
+Trong hộp thoại kết nối ứng dụng Android:
 
-- **Host:** the Hermes machine Tailscale IP, e.g. `100.64.12.34`, or its MagicDNS name
+- **Host:** IP Tailscale máy Hermes, ví dụ: `100.64.12.34`, hoặc tên MagicDNS của nó
 - **Port:** `8642`
 - **API Key:** `API_SERVER_KEY`
 
-If using Memory/Cron/Skills/Settings remotely, keep the dashboard reachable on the same Tailscale host at port `9119`.
+Nếu sử dụng Bộ nhớ/Cron/Kỹ năng/Cài đặt từ xa, giữ bảng điều khiển có thể truy cập trên cùng máy chủ Tailscale tại cổng `9119`.
 
-## Connect over HTTPS
+## Kết nối qua HTTPS
 
-For hosted/reverse-proxy deployments (e.g., Hugging Face Spaces, VPS with nginx/Caddy), enter the full HTTPS URL in the **Host** field:
+Đối với triển khai được lưu trữ/reverse-proxy (ví dụ: Hugging Face Spaces, VPS với nginx/Caddy), nhập URL HTTPS đầy đủ vào trường **Host**:
 
 ```text
 https://your-hermes-host.example.com
 ```
 
-If no port is included, the app uses port `443`. If your HTTPS service uses a custom port, either include it in the URL (`https://host.example.com:8443`) or set the Port field to that value before connecting.
+Nếu không bao gồm cổng, ứng dụng sử dụng cổng `443`. Nếu dịch vụ HTTPS của bạn sử dụng cổng tùy chỉnh, hãy bao gồm nó trong URL (`https://host.example.com:8443`) hoặc đặt trường Port thành giá trị đó trước khi kết nối.
 
-Leave the **Port** field blank and the app infers the scheme default — `443` for HTTPS, `8642` for HTTP. A value typed into **Port** is always used as-is, including `8642` over HTTPS (for example a `tailscale serve` endpoint that terminates TLS on the API-server port). A port inside the Host URL (`https://host.example.com:8443`) takes precedence over the Port field.
+Để trống trường **Port** và ứng dụng suy ra mặc định scheme — `443` cho HTTPS, `8642` cho HTTP. Giá trị được nhập vào **Port** luôn được sử dụng nguyên trạng, bao gồm `8642` qua HTTPS (ví dụ: điểm cuối `tailscale serve` kết thúc TLS trên cổng API-server). Cổng bên trong URL Host (`https://host.example.com:8443`) được ưu tiên hơn trường Port.
 
-For HTTPS connections, dashboard drawer screens use the same external HTTPS port. For local HTTP/LAN connections, chat uses port `8642` and dashboard screens use port `9119`.
+Đối với kết nối HTTPS, các màn hình ngăn kéo bảng điều khiển sử dụng cùng cổng HTTPS bên ngoài. Đối với kết nối HTTP/LAN cục bộ, cuộc trò chuyện sử dụng cổng `8642` và màn hình bảng điều khiển sử dụng cổng `9119`.
 
-### Reverse-proxy paths
+### Đường dẫn reverse-proxy
 
-If your proxy exposes Hermes under URL paths, keep the **Host** field to the origin only and put paths in **Custom proxy and dashboard details**:
+Nếu proxy của bạn hiển thị Hermes dưới đường dẫn URL, giữ trường **Host** chỉ gốc và đặt đường dẫn trong **Custom proxy and dashboard details**:
 
 ```text
 Host: https://your-hermes-host.example.com
 Port: 443
 Gateway path prefix: /profile/peter
 Dashboard path prefix: /dashboard
-Dashboard behind proxy: on, if the proxy injects dashboard auth
+Dashboard behind proxy: on, nếu proxy tiêm xác thực bảng điều khiển
 ```
 
-With that setup, the app calls gateway routes such as
-`https://your-hermes-host.example.com/profile/peter/v1/chat/completions` and
-dashboard routes such as
+Với thiết lập đó, ứng dụng gọi các tuyến gateway như
+`https://your-hermes-host.example.com/profile/peter/v1/chat/completions` và
+các tuyến bảng điều khiển như
 `https://your-hermes-host.example.com/dashboard/api/model/info`.
 
-### Security notes
+### Ghi chú bảo mật
 
-- Prefer Tailscale/VPN for remote use.
-- Do not port-forward the Gateway API Server or dashboard directly to the public internet.
-- Rotate `API_SERVER_KEY` if it is shared or exposed.
-- Local/Tailscale examples use HTTP, so the private network boundary matters. Use HTTPS for public or hosted endpoints.
+- Ưu tiên Tailscale/VPN để sử dụng từ xa.
+- Không chuyển tiếp cổng Gateway API Server hoặc bảng điều khiển trực tiếp ra internet công cộng.
+- Xoay `API_SERVER_KEY` nếu nó được chia sẻ hoặc hiển thị.
+- Các ví dụ cục bộ/Tailscale sử dụng HTTP, vì vậy ranh giới mạng riêng tư quan trọng. Sử dụng HTTPS cho các điểm cuối công cộng hoặc được lưu trữ.
 
-## Architecture
+## Kiến trúc
 
 ```text
-Android app (Flutter)
-├─ Gateway API Server, port 8642 or HTTPS proxy prefix
+Ứng dụng Android (Flutter)
+├─ Gateway API Server, cổng 8642 hoặc tiền tố proxy HTTPS
 │  ├─ GET /api/sessions
 │  ├─ GET /api/sessions/{id}/messages
 │  └─ POST /v1/chat/completions  (SSE streaming)
-└─ Hermes dashboard, port 9119 or HTTPS proxy prefix
+└─ Bảng điều khiển Hermes, cổng 9119 hoặc tiền tố proxy HTTPS
    ├─ /api/memory
    ├─ /api/cron/jobs
    ├─ /api/skills
    └─ /api/model/*
 ```
 
-## Using the app
+## Sử dụng ứng dụng
 
-### Chat screen
+### Màn hình cuộc trò chuyện
 
-- **Send messages** — Type in the input field and tap the send button or press Enter.
-- **Streaming responses** — The agent's response appears token-by-token in real-time. The chat auto-scrolls to the bottom as new tokens arrive.
-- **Tool progress** — When the agent uses tools, inline progress messages show the tool name, status, and progress.
-- **Verbose mode** — Toggle in the app settings to show raw message metadata (role, tool call IDs, timestamps).
-- **Markdown rendering** — Assistant messages render markdown (code blocks, tables, lists, links).
-- **Relative timestamps** — Messages show "2m ago", "3h ago", etc.
+- **Gửi tin nhắn** — Nhập vào trường nhập liệu và nhấn nút gửi hoặc nhấn Enter.
+- **Phản hồi streaming** — Phản hồi của tác nhân xuất hiện từng token theo thời gian thực. Cuộc trò chuyện tự động cuộn xuống dưới cùng khi token mới xuất hiện.
+- **Tiến trình công cụ** — Khi tác nhân sử dụng công cụ, tin nhắn tiến trình nội tuyến hiển thị tên công cụ, trạng thái và tiến trình.
+- **Chế độ chi tiết** — Chuyển đổi trong cài đặt ứng dụng để hiển thị siêu dữ liệu tin nhắn thô (vai trò, ID lời gọi công cụ, dấu thời gian).
+- **Kết xuất Markdown** — Tin nhắn trợ lý kết xuất markdown (khối mã, bảng, danh sách, liên kết).
+- **Dấu thời gian tương đối** — Tin nhắn hiển thị "2 phút trước", "3 giờ trước", v.v.
 
-### Voice chat
+### Cuộc trò chuyện giọng nói
 
-The chat input bar has two voice controls:
+Thanh nhập cuộc trò chuyện có hai điều khiển giọng nói:
 
-| Button | Icon | What it does |
+| Nút | Biểu tượng | Chức năng |
 |--------|------|-------------|
-| **Mic** | 🎤 / 🎤🔴 | Tap to start voice dictation. Speak your message — it appears in the input field and sends automatically when you pause. Tap again (or the red stop icon) to cancel. |
-| **Voice reply toggle** | 🔊 / 🔇 | Toggles whether Hermes reads its response aloud after a voice-input message. On = 🔊 (volume up), Off = 🔇 (volume off). |
+| **Micrô** | 🎤 / 🎤🔴 | Nhấn để bắt đầu nhập giọng nói. Nói tin nhắn của bạn — nó xuất hiện trong trường nhập liệu và gửi tự động khi bạn tạm dừng. Nhấn lại (hoặc biểu tượng dừng màu đỏ) để hủy. |
+| **Chuyển đổi phản hồi giọng nói** | 🔊 / 🔇 | Chuyển đổi xem Hermes có đọc phản hồi của nó to sau tin nhắn nhập giọng nói hay không. Bật = 🔊 (tăng âm lượng), Tắt = 🔇 (tắt âm lượng). |
 
-**How voice replies work:**
+**Cách phản hồi giọng nói hoạt động:**
 
-1. Tap the mic, speak your question, and wait for the recognition to finish (the text appears and auto-sends).
-2. Hermes streams its response as text in the chat as usual.
-3. After the full response arrives, if the voice reply toggle is on (🔊), the app reads the response aloud using text-to-speech.
+1. Nhấn micrô, nói câu hỏi của bạn và đợi nhận dạng hoàn thành (văn bản xuất hiện và tự động gửi).
+2. Hermes truyền phản hồi của nó dưới dạng văn bản trong cuộc trò chuyện như bình thường.
+3. Sau khi phản hồi đầy đủ đến, nếu chuyển đổi phản hồi giọng nói bật (🔊), ứng dụng đọc phản hồi to bằng chuyển văn bản thành giọng nói.
 
-Voice replies **only** trigger when you send a message via the mic button. Typed messages produce text responses only.
+Phản hồi giọng nói **chỉ** kích hoạt khi bạn gửi tin nhắn qua nút micrô. Tin nhắn đã nhập chỉ tạo phản hồi văn bản.
 
-#### Setting up text-to-speech (Android)
+#### Thiết lập chuyển văn bản thành giọng nói (Android)
 
-Spoken replies require Google Text-to-Speech to be installed and configured on your device. The app uses the device's built-in TTS engine — it does not bundle its own voices.
+Phản hồi nói yêu cầu Google Text-to-Speech được cài đặt và cấu hình trên thiết bị của bạn. Ứng dụng sử dụng công cụ TTS tích hợp của thiết bị — nó không đóng gói giọng nói riêng.
 
-**Step-by-step:**
+**Từng bước:**
 
-1. **Install Google Text-to-Speech** — If not already on your device, install from the Play Store: [Google Text-to-Speech](https://play.google.com/store/apps/details?id=com.google.android.tts)
-2. **Set as default engine** — Settings → Accessibility → Text-to-speech output → Preferred engine → **Google Text-to-Speech**
-3. **Download voice data** — In the same TTS settings screen, tap the gear icon ⚙️ next to Google Text-to-Speech → Install voice data → select **English (Australia)** or your preferred English voice → download
-4. **Check media volume** — TTS uses the **media** audio stream, not the ringer. Turn up media volume and make sure your phone isn't in silent/vibrate-only mode.
-5. **Test TTS** — In the TTS settings screen, tap "Play" to hear a test phrase. If you hear it, the app should work.
+1. **Cài đặt Google Text-to-Speech** — Nếu chưa có trên thiết bị của bạn, cài đặt từ Play Store: [Google Text-to-Speech](https://play.google.com/store/apps/details?id=com.google.android.tts)
+2. **Đặt làm công cụ mặc định** — Cài đặt → Khả năng tiếp cận → Đầu ra chuyển văn bản thành giọng nói → Công cụ ưu tiên → **Google Text-to-Speech**
+3. **Tải dữ liệu giọng nói** — Trong cùng màn hình cài đặt TTS, nhấn biểu tượng bánh răng ⚙️ bên cạnh Google Text-to-Speech → Cài đặt dữ liệu giọng nói → chọn **English (Australia)** hoặc giọng tiếng Anh ưu tiên của bạn → tải xuống
+4. **Kiểm tra âm lượng phương tiện** — TTS sử dụng luồng âm thanh **phương tiện**, không phải chuông. Tăng âm lượng phương tiện và đảm bảo điện thoại của bạn không ở chế độ im lặng/chỉ rung.
+5. **Kiểm tra TTS** — Trong màn hình cài đặt TTS, nhấn "Play" để nghe cụm từ kiểm tra. Nếu bạn nghe được, ứng dụng sẽ hoạt động.
 
-**Troubleshooting voice:**
+**Khắc phục sự cố giọng nói:**
 
-- **Mic button does nothing** — Speech recognition may be unavailable on your device. Ensure Google app is installed and has microphone permission.
-- **Voice reply toggle is on (🔊) but Hermes doesn't speak** — Google TTS is likely not installed or has no voice data downloaded. Follow the TTS setup steps above.
-- **Hermes speaks quietly or too fast** — Adjust speech rate and volume in Settings → Accessibility → Text-to-speech output.
-- **Recognition is inaccurate** — Speak clearly, reduce background noise, and check that the device's system language includes English.
+- **Nút micrô không làm gì** — Nhận dạng giọng nói có thể không khả dụng trên thiết bị của bạn. Đảm bảo ứng dụng Google được cài đặt và có quyền micrô.
+- **Chuyển đổi phản hồi giọng nói bật (🔊) nhưng Hermes không nói** — Google TTS có thể không được cài đặt hoặc không có dữ liệu giọng nói được tải xuống. Làm theo các bước thiết lập TTS ở trên.
+- **Hermes nói nhỏ hoặc quá nhanh** — Điều chỉnh tốc độ nói và âm lượng trong Cài đặt → Khả năng tiếp cận → Đầu ra chuyển văn bản thành giọng nói.
+- **Nhận dạng không chính xác** — Nói rõ ràng, giảm tiếng ồn nền và kiểm tra xem ngôn ngữ hệ thống của thiết bị có bao gồm tiếng Anh không.
 
-### Session list
+### Danh sách phiên
 
-- Browse all Hermes sessions.
-- Tap a session to open its chat.
-- Pull to refresh the session list.
-- Create a new session from the session list header.
+- Duyệt tất cả các phiên Hermes.
+- Nhấn một phiên để mở cuộc trò chuyện của nó.
+- Kéo để làm mới danh sách phiên.
+- Tạo một phiên mới từ tiêu đề danh sách phiên.
 
-### Navigation drawer (☰)
+### Ngăn kéo điều hướng (☰)
 
-Access these dashboard-powered screens:
+Truy cập các màn hình được hỗ trợ bởi bảng điều khiển này:
 
-- **Memory** — View conversation memory across sessions. Shows stored facts, preferences, and project context.
-- **Cron Jobs** — List all scheduled cron jobs. Trigger, pause/resume, create, edit, or delete jobs.
-- **Skills** — Browse available Hermes skills with descriptions and trigger conditions.
-- **Settings** — View and change the configured Hermes model, theme preference, and verbose mode.
+- **Bộ nhớ** — Xem bộ nhớ cuộc trò chuyện qua các phiên. Hiển thị sự thật đã lưu trữ, tùy chọn và ngữ cảnh dự án.
+- **Cron Jobs** — Liệt kê tất cả các cron job đã lên lịch. Kích hoạt, tạm dừng/tiếp tục, tạo, chỉnh sửa hoặc xóa job.
+- **Kỹ năng** — Duyệt các kỹ năng Hermes có sẵn với mô tả và điều kiện kích hoạt.
+- **Cài đặt** — Xem và thay đổi mô hình Hermes đã cấu hình, tùy chọn chủ đề và chế độ chi tiết.
 
-### Theme
+### Chủ đề
 
-- Three-way toggle: **Dark** / **Light** / **System default**.
-- Gold Hermes accent (`#D4AF37`) on dark mode; adapted for light mode.
+- Chuyển đổi ba chiều: **Tối** / **Sáng** / **Mặc định hệ thống**.
+- Nhấn Hermes vàng (`#D4AF37`) trên chế độ tối; được điều chỉnh cho chế độ sáng.
 
-### Cron job management
+### Quản lý Cron job
 
-The Cron Jobs screen supports full CRUD:
+Màn hình Cron Jobs hỗ trợ CRUD đầy đủ:
 
-- **List** — See all jobs with status (enabled/disabled), next run, and schedule.
-- **Create** — Tap **+** to add a new job with schedule (cron expression or interval), prompt, and optional skills.
-- **Edit** — Tap a job to modify its schedule, prompt, skills, or status.
-- **Trigger** — Manually run a job immediately.
-- **Pause/Resume** — Toggle job enabled state.
-- **Delete** — Remove a job (with confirmation).
+- **Liệt kê** — Xem tất cả các job với trạng thái (đã bật/đã tắt), chạy tiếp theo và lịch trình.
+- **Tạo** — Nhấn **+** để thêm job mới với lịch trình (biểu thức cron hoặc khoảng thời gian), dấu nhắc và kỹ năng tùy chọn.
+- **Chỉnh sửa** — Nhấn một job để sửa đổi lịch trình, dấu nhắc, kỹ năng hoặc trạng thái của nó.
+- **Kích hoạt** — Chạy job thủ công ngay lập tức.
+- **Tạm dừng/Tiếp tục** — Chuyển đổi trạng thái đã bật job.
+- **Xóa** — Xóa một job (với xác nhận).
 
-## Development
+## Phát triển
 
 ```bash
 cd hermes-android
@@ -571,7 +570,7 @@ flutter test
 flutter run -d android
 ```
 
-## Build release APKs
+## Build APK phát hành
 
 ```bash
 flutter clean
@@ -581,16 +580,16 @@ mkdir -p release-apks
 cp build/app/outputs/flutter-apk/app-*-release.apk release-apks/
 ```
 
-`pubspec.yaml` declares the base Android `versionCode`. The F-Droid ABI-split
-block in `android/app/build.gradle.kts` derives per-ABI codes as
-`base * 10 + ABI code` (armeabi-v7a = 1, arm64-v8a = 2, x86_64 = 3), so the
-codes stay ordered armeabi-v7a < arm64-v8a < x86_64 as fdroiddata requires.
-For v2.1.13, base `2153` therefore produces codes `21531`/`21532`/`21533`.
-CI reads the completed arm64 APK with `aapt` and fails if that relationship
-drifts. Release-floor checks continue to apply to the base value and must not
-be weakened to rely on the ABI code.
+`pubspec.yaml` khai báo `versionCode` Android cơ sở. Khối tách ABI F-Droid
+trong `android/app/build.gradle.kts` suy ra mã cho mỗi ABI là
+`base * 10 + ABI code` (armeabi-v7a = 1, arm64-v8a = 2, x86_64 = 3), vì vậy các
+mã được sắp xếp theo thứ tự armeabi-v7a < arm64-v8a < x86_64 như fdroiddata yêu cầu.
+Đối với v2.1.13, cơ sở `2153` do đó tạo ra mã `21531`/`21532`/`21533`.
+CI đọc APK arm64 hoàn chỉnh bằng `aapt` và thất bại nếu mối quan hệ đó
+lệch. Kiểm tra sàn phát hành tiếp tục áp dụng cho giá trị cơ sở và không được
+làm yếu để dựa vào mã ABI.
 
-Output files:
+Tệp đầu ra:
 
 ```text
 build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
@@ -598,61 +597,61 @@ build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
 build/app/outputs/flutter-apk/app-x86_64-release.apk
 ```
 
-## Release checklist
+## Danh sách kiểm tra phát hành
 
-Every release PR must complete [`CODE_QUALITY_CHECKLIST.md`](CODE_QUALITY_CHECKLIST.md) before tagging or publishing APKs. The checklist covers analysis, architecture, UX, security, release, and manual smoke-test checks.
+Mỗi PR phát hành phải hoàn thành [`CODE_QUALITY_CHECKLIST.md`](CODE_QUALITY_CHECKLIST.md) trước khi gắn thẻ hoặc xuất bản APK. Danh sách kiểm tra bao gồm phân tích, kiến trúc, UX, bảo mật, phát hành và kiểm tra thủ công.
 
-Minimum release flow:
+Luồng phát hành tối thiểu:
 
-1. Update `pubspec.yaml` version.
-2. Complete `CODE_QUALITY_CHECKLIST.md` and record any exceptions in the release PR.
-3. Build split release APKs.
-4. Tag the release, e.g. `v1.0.0`.
-5. Create a GitHub Release with all APK assets.
-6. Confirm the repository visibility and release assets on GitHub.
+1. Cập nhật phiên bản `pubspec.yaml`.
+2. Hoàn thành `CODE_QUALITY_CHECKLIST.md` và ghi lại bất kỳ ngoại lệ nào trong PR phát hành.
+3. Build APK phát hành tách biệt.
+4. Gắn thẻ phát hành, ví dụ: `v1.0.0`.
+5. Tạo Phát hành GitHub với tất cả tài sản APK.
+6. Xác nhận khả năng hiển thị kho lưu trữ và tài sản phát hành trên GitHub.
 
-## Troubleshooting
+## Khắc phục sự cố
 
-### I can see sessions but dashboard drawer screens fail
+### Tôi có thể thấy các phiên nhưng màn hình ngăn kéo bảng điều khiển thất bại
 
-Chat/session features use port `8642`. Memory, Cron Jobs, Skills, and Settings use the dashboard on port `9119`. Start the dashboard with `--host 0.0.0.0` and make sure port `9119` is reachable over Wi-Fi or Tailscale.
+Các tính năng cuộc trò chuyện/phiên sử dụng cổng `8642`. Bộ nhớ, Cron Jobs, Kỹ năng và Cài đặt sử dụng bảng điều khiển trên cổng `9119`. Khởi động bảng điều khiển với `--host 0.0.0.0` và đảm bảo cổng `9119` có thể truy cập qua Wi-Fi hoặc Tailscale.
 
-### Chat fails with an auth error
+### Cuộc trò chuyện thất bại với lỗi xác thực
 
-Check that the Android connection's API key matches `API_SERVER_KEY` from the Hermes machine (`~/.hermes/.env`).
+Kiểm tra xem khóa API của kết nối Android có khớp với `API_SERVER_KEY` từ máy Hermes (`~/.hermes/.env`) không.
 
-### The app cannot find the host
+### Ứng dụng không thể tìm thấy máy chủ
 
-- Verify phone and host are on the same Wi-Fi or same Tailscale tailnet.
-- Try the raw IP before a hostname.
-- Check local firewall rules for ports `8642` and `9119`.
-- On Android, ensure the app has network permission (granted by default).
+- Xác minh điện thoại và máy chủ trên cùng Wi-Fi hoặc cùng tailnet Tailscale.
+- Thử IP thô trước tên máy chủ.
+- Kiểm tra quy tắc tường lửa cục bộ cho cổng `8642` và `9119`.
+- Trên Android, đảm bảo ứng dụng có quyền mạng (được cấp theo mặc định).
 
-### Streaming stops or messages don't appear
+### Streaming dừng hoặc tin nhắn không xuất hiện
 
-- The SSE connection may have timed out. Pull to refresh the session list and re-enter the chat.
-- Check that the Gateway API Server is running and responsive: `curl http://<host>:8642/api/sessions`.
-- If using a reverse proxy, ensure it supports long-lived SSE connections (no aggressive timeouts).
+- Kết nối SSE có thể đã hết thời gian chờ. Kéo để làm mới danh sách phiên và nhập lại cuộc trò chuyện.
+- Kiểm tra xem Gateway API Server có đang chạy và phản hồi không: `curl http://<host>:8642/api/sessions`.
+- Nếu sử dụng reverse proxy, đảm bảo nó hỗ trợ kết nối SSE lâu dài (không có thời gian chờ tích cực).
 
-### Dashboard screens show empty or error
+### Màn hình bảng điều khiển hiển thị trống hoặc lỗi
 
-- Verify the dashboard is running with `--host 0.0.0.0` (an open dashboard also needs `--insecure`).
-- If the dashboard is password-protected, set the username/password under **⋮ → Dashboard / Proxy Settings** (or **Custom proxy and dashboard details** when adding the connection). A 401 here means the credentials are wrong.
-- If the dashboard sits behind a reverse-proxy path, set **Dashboard path prefix**. If the proxy injects dashboard auth, enable **Dashboard behind proxy** so the app sends clean requests.
-- Check the dashboard port matches the connection (default `9119` for local/Tailscale, same HTTPS port for hosted; override it in Dashboard / Proxy Settings if needed).
-- The dashboard must be on the same host as the Gateway API Server for the app's drawer to reach it.
+- Xác minh bảng điều khiển đang chạy với `--host 0.0.0.0` (bảng điều khiển mở cũng cần `--insecure`).
+- Nếu bảng điều khiển được bảo vệ bằng mật khẩu, đặt tên người dùng/mật khẩu trong **⋮ → Dashboard / Proxy Settings** (hoặc **Custom proxy and dashboard details** khi thêm kết nối). 401 ở đây có nghĩa là thông tin xác thực sai.
+- Nếu bảng điều khiển nằm sau đường dẫn reverse-proxy, đặt **Dashboard path prefix**. Nếu proxy tiêm xác thực bảng điều khiển, bật **Dashboard behind proxy** để ứng dụng gửi yêu cầu sạch.
+- Kiểm tra cổng bảng điều khiển khớp với kết nối (mặc định `9119` cho cục bộ/Tailscale, cùng cổng HTTPS cho được lưu trữ; ghi đè nó trong Dashboard / Proxy Settings nếu cần).
+- Bảng điều khiển phải trên cùng máy chủ với Gateway API Server để ngăn kéo ứng dụng truy cập nó.
 
-### Voice dictation or spoken replies aren't working
+### Nhập giọng nói hoặc phản hồi nói không hoạt động
 
-- **Spoken replies not working** — Install Google Text-to-Speech, set it as the default engine, and download English voice data. See [Setting up text-to-speech](#setting-up-text-to-speech-android) above for step-by-step instructions.
-- **Speech recognition not working** — Ensure the Google app is installed and has microphone permission (Settings → Apps → Hermes → Permissions → Microphone).
-- **Voice reply toggle is off** — Check the speaker icon in the chat input bar: 🔊 = on, 🔇 = off. Tap it to enable spoken replies.
-- **Media volume is zero** — TTS uses the media audio stream, not the ringer. Turn up media volume with the physical volume buttons while on the home screen.
-- **Hermes speaks but audio is quiet or fast** — Adjust speech rate and volume in Settings → Accessibility → Text-to-speech output.
+- **Phản hồi nói không hoạt động** — Cài đặt Google Text-to-Speech, đặt nó làm công cụ mặc định và tải dữ liệu giọng nói tiếng Anh. Xem [Thiết lập chuyển văn bản thành giọng nói](#thiết-lập-chuyển-văn-bản-thành-giọng-nói-android) ở trên để biết hướng dẫn từng bước.
+- **Nhận dạng giọng nói không hoạt động** — Đảm bảo ứng dụng Google được cài đặt và có quyền micrô (Cài đặt → Ứng dụng → Hermes → Quyền → Micrô).
+- **Chuyển đổi phản hồi giọng nói tắt** — Kiểm tra biểu tượng loa trong thanh nhập cuộc trò chuyện: 🔊 = bật, 🔇 = tắt. Nhấn nó để bật phản hồi nói.
+- **Âm lượng phương tiện bằng không** — TTS sử dụng luồng âm thanh phương tiện, không phải chuông. Tăng âm lượng phương tiện bằng các nút âm lượng vật lý trong khi ở màn hình chính.
+- **Hermes nói nhưng âm thanh nhỏ hoặc nhanh** — Điều chỉnh tốc độ nói và âm lượng trong Cài đặt → Khả năng tiếp cận → Đầu ra chuyển văn bản thành giọng nói.
 
-### Host field examples
+### Ví dụ trường máy chủ
 
-The app accepts any of these forms and normalizes them when saving:
+Ứng dụng chấp nhận bất kỳ dạng nào trong số này và chuẩn hóa chúng khi lưu:
 
 ```text
 192.168.1.50
@@ -664,66 +663,66 @@ https://your-hermes-host.example.com
 https://your-hermes-host.example.com:8443
 ```
 
-For hosted paths such as `https://your-hermes-host.example.com/profile/peter`, enter `https://your-hermes-host.example.com` as the host and `/profile/peter` as the **Gateway path prefix**.
+Đối với các đường dẫn được lưu trữ như `https://your-hermes-host.example.com/profile/peter`, nhập `https://your-hermes-host.example.com` làm máy chủ và `/profile/peter` làm **Gateway path prefix**.
 
-## Project structure
+## Cấu trúc dự án
 
 ```text
 lib/
-├── main.dart                          # App shell, saved connections, navigation drawer
+├── main.dart                          # Vỏ ứng dụng, kết nối đã lưu, ngăn kéo điều hướng
 ├── core/
 │   ├── models/
-│   │   ├── attachment_draft.dart       # File-backed image/file composer model
-│   │   ├── connection.dart             # SavedConnection model and host normalization
-│   │   └── session.dart                # Session model
+│   │   ├── attachment_draft.dart       # Mô hình composer hình ảnh/tệp được hỗ trợ bởi tệp
+│   │   ├── connection.dart             # Mô hình SavedConnection và chuẩn hóa máy chủ
+│   │   └── session.dart                # Mô hình phiên
 │   ├── screens/
-│   │   ├── session_list_screen.dart   # Session browser
-│   │   ├── chat_screen.dart           # Chat with SSE streaming
-│   │   ├── settings_screen.dart       # Model/theme/app settings
-│   │   ├── memory_screen.dart         # Memory viewer
-│   │   ├── skills_screen.dart         # Skills browser
-│   │   └── cron_screen.dart           # Cron job manager
+│   │   ├── session_list_screen.dart   # Trình duyệt phiên
+│   │   ├── chat_screen.dart           # Cuộc trò chuyện với SSE streaming
+│   │   ├── settings_screen.dart       # Cài đặt mô hình/chủ đề/ứng dụng
+│   │   ├── memory_screen.dart         # Trình xem bộ nhớ
+│   │   ├── skills_screen.dart         # Trình duyệt kỹ năng
+│   │   └── cron_screen.dart           # Trình quản lý Cron job
 │   ├── services/
-│   │   ├── attachment_draft_service.dart # Cache, sanitization, limits, upload order
-│   │   ├── connection_manager.dart    # Saved connections, Gateway API, Dashboard API
-│   │   └── ws_client.dart             # JSON-RPC WebSocket client for future dashboard/TUI use
+│   │   ├── attachment_draft_service.dart # Bộ đệm, làm sạch, giới hạn, thứ tự tải lên
+│   │   ├── connection_manager.dart    # Kết nối đã lưu, Gateway API, Dashboard API
+│   │   └── ws_client.dart             # Máy khách JSON-RPC WebSocket cho sử dụng bảng điều khiển/TUI trong tương lai
 │   └── utils/
-│       └── responsive.dart            # Phone/tablet breakpoints
+│       └── responsive.dart            # Điểm ngắt điện thoại/máy tính bảng
 └── assets/
     └── icon/
-        └── icon.png                   # App icon source
+        └── icon.png                   # Nguồn biểu tượng ứng dụng
 ```
 
-## Credits
+## Ghi công
 
-- **maebahesioru** — corrected Gateway session liveness handling with focused
-  regressions in PR #121 (v2.1.9), added complete Flutter localisation and
-  on-device Japanese QA in PR #115 (v2.1.11), then added Android per-app locale
-  support and the bounded idle-session fallback in PRs #125 and #123 (v2.1.12),
-  and selectable message text with dark-theme and localisation coverage in
+- **maebahesioru** — đã sửa xử lý liveness phiên Gateway với
+  hồi quy tập trung trong PR #121 (v2.1.9), đã thêm bản địa hóa Flutter hoàn chỉnh và
+  QA tiếng Nhật trên thiết bị trong PR #115 (v2.1.11), sau đó đã thêm hỗ trợ ngôn ngữ Android cho từng ứng dụng
+  và dự phòng phiên nhàn rỗi bị giới hạn trong PR #125 và #123 (v2.1.12),
+  và văn bản tin nhắn có thể chọn với phạm vi chủ đề tối và bản địa hóa trong
   PR #127 (v2.1.13).
-- **igitur** — diagnosed and fixed explicit HTTPS port handling (PR #111) and
-  preserved running Hermes turns when leaving a chat (PR #113), with focused
-  regression coverage for both fixes. Released in v2.1.8.
-- **Thaeland** — contributed the extensive stock-gateway compatibility and
-  reliability work in PR #106: durable reconnect recovery, Projects and Chats
-  wire-contract fixes, safe pagination and folder ownership, transport
-  hardening, and the accompanying regression suite. Released in v2.1.7.
-- **spsDrop** — reported that Android could not connect through a private
-  Caddy/Tailscale gateway whose CA was installed in the device trust store
-  (#108). Fixed in v2.1.6.
-- **kon1z** — supplied the detailed tablet reproduction, measurements, and root-cause analysis for clipped long messages (#104). Fixed in v2.1.4.
-- **AletheiaVox** — Hermes-profile plumbing on the Desktop Gateway socket (PR #98): optional profile field on connections, injected into every JSON-RPC payload so machine-level dashboards scope chats to the right profile. Merged in v2.1.3.
-- **software-greg** — gateway-less chat model listing and application (PR #97). Merged in v2.1.3.
-- **realchrisolin** — removed the hardcoded desktop gateway URL default and made optional connection fields clearable (PR #86). Merged in v2.1.3.
-- **Thaeland** — diagnosed that Project chats were blocked on stock Hermes gateways (#100) and contributed the cwd-based fallback and stock `session.create` wire shape so Project chats open everywhere (PR #102). Merged in v2.1.2.
-- **CarlosReyesPena** — community daily-driver workspace edition (PR #88): Workspace shell with Home/Projects/Chats/Activity/More, gateway projects integration, three-mode session search (on-device / FTS5 full-text / AI-assisted), encrypted config backup & restore, quick-chat lifecycle and share intents, capability discovery, and 900+ tests. Merged in v2.1.0.
-- **CristianGCiocoi** — community Remote Gateway edition: unified JSON-RPC transport, per-chat model selection, multi-attachment uploads, durable turn recovery, voice dictation, gateway contract test suite, and the comprehensive CHANGELOG. Merged in v2.0.0.
-- **AI-Guru** — detailed review, independent testing, and scroll-offset bug identification for the community edition.
-- **grunjol** — technical review and transport-architecture feedback for the community edition; also contributed PR #68: reverse-proxy path prefix and proxied dashboard support.
-- **louquillio** — contributed PR #74: session source filters in Settings.
-- **sternbergm** — contributed PR #67: password-protected dashboards and configurable dashboard port.
+- **igitur** — đã chẩn đoán và sửa xử lý cổng HTTPS rõ ràng (PR #111) và
+  bảo toàn các vòng Hermes đang chạy khi rời khỏi cuộc trò chuyện (PR #113), với phạm vi
+  hồi quy tập trung cho cả hai bản sửa lỗi. Phát hành trong v2.1.8.
+- **Thaeland** — đã đóng góp công việc tương thích và độ tin cậy gateway cổ điển rộng rãi
+  trong PR #106: khôi phục kết nối lại bền vững, sửa lỗi hợp đồng
+  dây Projects và Chats, phân trang và quyền sở hữu thư mục an toàn, cứng hóa
+  truyền tải và bộ hồi quy kèm theo. Phát hành trong v2.1.7.
+- **spsDrop** — đã báo cáo rằng Android không thể kết nối qua gateway
+  Caddy/Tailscale riêng tư có CA được cài đặt trong kho lưu trữ tin cậy thiết bị
+  (#108). Đã sửa trong v2.1.6.
+- **kon1z** — đã cung cấp tái tạo máy tính bảng chi tiết, đo lường và phân tích nguyên nhân gốc rễ cho tin nhắn dài bị cắt (#104). Đã sửa trong v2.1.4.
+- **AletheiaVox** — ống dẫn Hermes-profile trên socket Desktop Gateway (PR #98): trường hồ sơ tùy chọn trên kết nối, được tiêm vào mọi payload JSON-RPC để bảng điều khiển cấp máy xác định phạm vi cuộc trò chuyện cho hồ sơ đúng. Đã hợp nhất trong v2.1.3.
+- **software-greg** — danh sách và ứng dụng mô hình cuộc trò chuyện không có gateway (PR #97). Đã hợp nhất trong v2.1.3.
+- **realchrisolin** — đã xóa mặc định URL gateway desktop được mã hóa cứng và làm cho các trường kết nối tùy chọn có thể xóa được (PR #86). Đã hợp nhất trong v2.1.3.
+- **Thaeland** — đã chẩn đoán rằng cuộc trò chuyện Dự án bị chặn trên các gateway Hermes cổ điển (#100) và đã đóng góp dự phòng dựa trên cwd và hình dạng dây `session.create` cổ điển để cuộc trò chuyện Dự án mở ở mọi nơi (PR #102). Đã hợp nhất trong v2.1.2.
+- **CarlosReyesPena** — phiên bản không gian làm việc sử dụng hàng ngày cộng đồng (PR #88): Vỏ không gian làm việc với Home/Projects/Chats/Activity/More, tích hợp dự án gateway, tìm kiếm phiên ba chế độ (trên thiết bị / FTS5 toàn văn / hỗ trợ AI), sao lưu & khôi phục cấu hình được mã hóa, vòng đời cuộc trò chuyện nhanh và ý định chia sẻ, khám phá khả năng và 900+ kiểm thử. Đã hợp nhất trong v2.1.0.
+- **CristianGCiocoi** — phiên bản Remote Gateway cộng đồng: truyền tải JSON-RPC thống nhất, chọn mô hình cho từng cuộc trò chuyện, tải lên nhiều tệp đính kèm, khôi phục vòng bền vững, nhập giọng nói, bộ kiểm thử hợp đồng gateway và CHANGELOG toàn diện. Đã hợp nhất trong v2.0.0.
+- **AI-Guru** — đánh giá chi tiết, kiểm thử độc lập và xác định lỗi offset cuộn cho phiên bản cộng đồng.
+- **grunjol** — đánh giá kỹ thuật và phản hồi kiến trúc truyền tải cho phiên bản cộng đồng; cũng đã đóng góp PR #68: hỗ trợ tiền tố đường dẫn reverse-proxy và bảng điều khiển được proxy.
+- **louquillio** — đã đóng góp PR #74: bộ lọc nguồn phiên trong Cài đặt.
+- **sternbergm** — đã đóng góp PR #67: bảng điều khiển được bảo vệ bằng mật khẩu và cổng bảng điều khiển có thể cấu hình.
 
-## License
+## Giấy phép
 
 MIT

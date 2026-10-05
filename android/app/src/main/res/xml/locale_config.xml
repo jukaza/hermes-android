@@ -4,7 +4,7 @@
 
   Without an android:localeConfig declaration, Android signals that users
   should not be able to set this app's language independently of the system
-  language, so no picker appears in Settings. These are the nine catalogues
+  language, so no picker appears in Settings. These are the ten catalogues
   the app actually ships (lib/l10n), with English as the ultimate fallback.
 -->
 <locale-config xmlns:android="http://schemas.android.com/apk/res/android">
@@ -17,4 +17,5 @@
     <locale android:name="de"/>
     <locale android:name="pt-BR"/>
     <locale android:name="ru"/>
+    <locale android:name="vi"/>
 </locale-config>
