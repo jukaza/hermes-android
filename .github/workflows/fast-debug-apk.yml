@@ -1,0 +1,43 @@
+name: Fast Debug APK
+
+# Lightweight fork-only build: skip analyze/test/signing gates so we get an
+# installable debug APK while free GitHub runners are slow to pick up jobs.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    name: Build debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.0'
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build debug APK (split per ABI)
+        run: flutter build apk --debug --split-per-abi
+
+      - name: Upload debug APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: fast-debug-apks
+          path: build/app/outputs/flutter-apk/app-*-debug.apk
+          if-no-files-found: error
+          retention-days: 14
