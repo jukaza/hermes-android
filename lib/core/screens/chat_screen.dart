@@ -1845,35 +1845,31 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     }
   }
 
-  /// Dashboard client used to list models when no Desktop Gateway is
-  /// configured. Listing needs only `api/model/info` + `api/model/options`
-  /// over REST — the gateway WebSocket is required solely to push a
-  /// per-session override, which [_setSessionModel] skips when no gateway is
-  /// present (the chosen model rides on the chat request instead).
-  DashboardClient _modelListingClient() => DashboardClient(
-    host: widget.connection.host,
-    port: widget.connection.dashboardPort,
-    pathPrefix: widget.connection.dashboardPrefix ?? '',
-    proxied: widget.connection.dashboardProxied,
-    useHttps: widget.connection.useHttps,
-    username: widget.connection.dashboardUsername,
-    password: widget.connection.dashboardPassword,
-  );
-
   Future<void> _showModelSelector() async {
     if (_pendingReattachResync) return;
     final desktopGateway = _desktopGateway;
-    final restClient = desktopGateway == null ? _modelListingClient() : null;
 
     setState(() => _loadingModelOptions = true);
     try {
-      final results = await Future.wait([
-        desktopGateway?.getModelInfo() ?? restClient!.getModelInfo(),
-        desktopGateway?.getModelOptions() ?? restClient!.getModelOptions(),
-      ]);
+      // API-server-only connections deliberately stay on port 8642. The API
+      // server exposes both the model inventory and the current session model;
+      // no Dashboard client or :9119 transport is needed for the picker.
+      final results = desktopGateway != null
+          ? await Future.wait([
+              desktopGateway.getModelInfo(),
+              desktopGateway.getModelOptions(),
+            ])
+          : await Future.wait([
+              _client.getSession(widget.session.id),
+              _client.getModelOptions(),
+            ]);
       if (!mounted || _pendingReattachResync) return;
-      final modelInfo = results[0];
-      final choices = _parseModelChoices(results[1]);
+      final sessionOrModelInfo = results[0];
+      final modelOptions = results[1];
+      final modelInfo = desktopGateway != null
+          ? sessionOrModelInfo
+          : modelOptions;
+      final choices = _parseModelChoices(modelOptions);
       if (choices.isEmpty) {
         throw StateError(
           'The active profile did not return any selectable models.',
@@ -1895,9 +1891,15 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       }
       if (!mounted || _pendingReattachResync) return;
 
+      final apiSessionModel = desktopGateway == null
+          ? sessionOrModelInfo['model']?.toString().trim()
+          : null;
+      final selectedModel = apiSessionModel?.isNotEmpty == true
+          ? apiSessionModel!
+          : (_sessionModel ?? widget.session.model);
       var selectedChoice = choices.firstWhere(
         (choice) =>
-            choice.model == (_sessionModel ?? widget.session.model) &&
+            choice.model == selectedModel &&
             (_sessionProvider == null || choice.provider == _sessionProvider),
         orElse: () => choices.first,
       );
@@ -2053,10 +2055,6 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     final choice = selection.choice;
     setState(() => _changingModel = true);
     try {
-      // Without a gateway there is no session-scoped RPC to push the override
-      // to, so the selection stays local and is sent as the `model` field on
-      // each chat request instead. Reasoning effort is gateway-only and is
-      // simply not applied in that mode.
       if (desktopGateway != null) {
         await desktopGateway.setSessionModel(
           sessionId: widget.session.id,
@@ -2067,6 +2065,15 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         await desktopGateway.setSessionReasoning(
           sessionId: widget.session.id,
           effort: selection.reasoningEffort,
+        );
+      } else {
+        // The API Server owns this session, so persist the same per-session
+        // lock over :8642 instead of activating the Dashboard transport.
+        // Reasoning effort remains a Desktop Gateway-only control.
+        await _client.setSessionModel(
+          sessionId: widget.session.id,
+          provider: choice.provider,
+          model: choice.model,
         );
       }
       final store = await _chatModelStore;
@@ -2203,9 +2210,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     await _gateway.sendMessageStreaming(
       message: text,
       sessionId: widget.session.id,
-      // Carry the per-chat override on the request. The API server resolves
-      // `model` per call, so this reproduces session-scoped model selection
-      // without needing the gateway WebSocket to hold session state.
+      // Carry the selected model on the request as well as in the API Server's
+      // durable session lock. This keeps the immediate turn explicit and
+      // remains compatible with the Desktop Gateway path.
       model: _sessionModelOverride ? _sessionModel : null,
       history: history,
       imageDataUrl: imageDataUrl,
